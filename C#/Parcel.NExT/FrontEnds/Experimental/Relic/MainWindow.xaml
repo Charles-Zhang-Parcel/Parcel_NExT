@@ -7,7 +7,33 @@
         xmlns:nodenetwork="clr-namespace:NodeNetwork.Views;assembly=NodeNetwork"
         mc:Ignorable="d"
         Title="Relic" Height="450" Width="800">
-    <Grid>
-        <nodenetwork:NetworkView x:Name="networkView" />
-    </Grid>
+    <DockPanel LastChildFill="True">
+        <!-- Menu Bar -->
+        <Menu VerticalAlignment="Top" HorizontalAlignment="Stretch" DockPanel.Dock="Top">
+            <MenuItem Header="_File"/>
+        </Menu>
+        
+        <!-- Document Are -->
+        <Grid DockPanel.Dock="Bottom">
+            <!-- Main Canvas -->
+            <Grid>
+                <nodenetwork:NetworkView x:Name="networkView" />
+            </Grid>
+
+            <!-- Quick Implementation of Attributes Panel -->
+            <Grid x:Name="PropertiesPanel" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="250"/>
+                </Grid.ColumnDefinitions>
+                <GridSplitter Width="5" Grid.Column="1"/>
+                <StackPanel Grid.Column="2">
+                    <Label Content="Node Definition"/>
+                    <TextBox Text="Node Name" Height="250" HorizontalAlignment="Stretch"/>
+                    <Button Content="Update"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </DockPanel>
 </Window>

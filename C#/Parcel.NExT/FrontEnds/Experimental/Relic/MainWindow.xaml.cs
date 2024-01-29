@@ -46,9 +46,10 @@ namespace Relic
             node2.Outputs.Add(node2Output);
 
             // Add nodes to network
-            var network = new NetworkViewModel();
-            network.Nodes.Add(node1);
-            network.Nodes.Add(node2);
+            NodeViewModel[] nodes = [node1, node2];
+            NetworkViewModel network = new();
+            foreach (NodeViewModel node in nodes)
+                network.Nodes.Add(node);
 
             // Assign the viewmodel to the view.
             networkView.ViewModel = network;
