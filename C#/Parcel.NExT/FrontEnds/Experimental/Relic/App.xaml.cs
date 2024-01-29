@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using System.Data;
+﻿using NodeNetwork;
 using System.Windows;
 
 namespace Relic
@@ -9,6 +8,11 @@ namespace Relic
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            NNViewRegistrar.RegisterSplat();
+        }
     }
 
 }
