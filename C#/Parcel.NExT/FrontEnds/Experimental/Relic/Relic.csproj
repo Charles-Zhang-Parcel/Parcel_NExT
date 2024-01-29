@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="NodeNetwork" Version="6.0.0" />
+    <PackageReference Include="NodeNetworkToolkit" Version="6.0.0" />
   </ItemGroup>
 
 </Project>
