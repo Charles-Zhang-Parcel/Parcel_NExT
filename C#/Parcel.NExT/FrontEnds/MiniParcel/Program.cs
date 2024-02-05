@@ -23,9 +23,11 @@ namespace MiniParcel
             if (args.Length == 0)
             {
                 Console.WriteLine($"""
-                    Welcome to MiniParcel - the REPL & CLI front-end for Parcel (Engine Version: {EngineVersion.Version})
-                    This is the REPL mode. Type `help` for available commands; Type `exit` to leave.
-                """);
+                    Welcome to MiniParcel - the REPL & CLI front-end for Parcel
+                    Engine Version: {EngineVersion.Version}
+                    This is the REPL mode. 
+                    Type `help` for available commands; Type `exit` to leave.
+                    """);
                 REPL();
             }
             else if (args.Length == 1 && args.First() == "--io")
@@ -67,8 +69,9 @@ namespace MiniParcel
         }
         private static void REPL()
         {
-            ParcelDocument document = new();
+            StringBuilder history = new();
 
+            ParcelDocument document = new();
             while (true)
             {
                 Console.Write("> ");
@@ -77,10 +80,15 @@ namespace MiniParcel
                     break;
                 else if (input == "help")
                     Console.WriteLine(GatherREPLHelp());
+                else if (input == "save")
+                    File.WriteAllText("Command History.txt", history.ToString().TrimEnd());
 
                 // Run nodes interactively
                 ParcelNode node = MiniParcelService.ParseAsNode(document, input);
                 ParcelPayload payload = node.Execute();
+
+                // Append to history
+                history.AppendLine(input);
             }
 
             static string GatherREPLHelp()
@@ -89,6 +97,7 @@ namespace MiniParcel
                     Available commands:
                       help: Print this help.
                       exit: Leave the REPL.
+                      save: Save command history.
                     """;
             }
         }
