@@ -1,4 +1,5 @@
 ﻿using Parcel.CoreEngine;
+using Parcel.CoreEngine.Document;
 using Parcel.CoreEngine.MiniParcel;
 using Parcel.CoreEngine.Service.CoreExtensions;
 using Parcel.CoreEngine.Versioning;
@@ -21,9 +22,14 @@ namespace MiniParcel
             // REPL
             if (args.Length == 0)
             {
-                Console.WriteLine($"MiniParcel: REPL & CLI for Parcel (Engine Version: {EngineVersion.Version})");
+                Console.WriteLine($"""
+                    Welcome to MiniParcel - the REPL & CLI front-end for Parcel (Engine Version: {EngineVersion.Version})
+                    This is the REPL mode. Type `help` for available commands; Type `exit` to leave.
+                """);
                 REPL();
             }
+            else if (args.Length == 1 && args.First() == "--io")
+                IOMode();
             // Print help
             else if (args.Length == 1 && args.First() == "--help")
                 PrintHelp();
@@ -44,7 +50,7 @@ namespace MiniParcel
         #endregion
 
         #region Execution Paths
-        private static void REPL()
+        private static void IOMode()
         {
             StringBuilder script = new();
             while (true)
@@ -56,8 +62,35 @@ namespace MiniParcel
 
                 script.AppendLine(input);
             }
-            
+
             MiniParcelService.Parse(script.ToString()).Execute();
+        }
+        private static void REPL()
+        {
+            ParcelDocument document = new();
+
+            while (true)
+            {
+                Console.Write("> ");
+                string? input = Console.ReadLine();
+                if (input == null || input == "exit")
+                    break;
+                else if (input == "help")
+                    Console.WriteLine(GatherREPLHelp());
+
+                // Run nodes interactively
+                ParcelNode node = MiniParcelService.ParseAsNode(document, input);
+                ParcelPayload payload = node.Execute();
+            }
+
+            static string GatherREPLHelp()
+            {
+                return $"""
+                    Available commands:
+                      help: Print this help.
+                      exit: Leave the REPL.
+                    """;
+            }
         }
         private static void PrintHelp()
         {

@@ -1,10 +1,8 @@
 ﻿using Parcel.CoreEngine.Document;
 using Parcel.CoreEngine.InstructionSets;
 using Parcel.CoreEngine.Service.CoreExtensions;
-using System;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Parcel.CoreEngine.Service.Interpretation
 {
